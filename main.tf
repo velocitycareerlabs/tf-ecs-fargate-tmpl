@@ -34,7 +34,7 @@ variable "availability_zones" {
 }
 
 variable "service_desired_count" {
-  description = "Number of instances running in parallel"
+  description = "Number of tasks running in parallel"
   default     = 2
 }
 
@@ -55,7 +55,6 @@ variable "container_memory" {
 
 variable "tsl_certificate_arn" {
   description = "The ARN of the certificate that the ALB uses for https"
-  default     = "arn:aws:acm:eu-central-1:804609905630:certificate/94a1e540-6abb-4229-aac8-7c4548462f7b"
 }
 
 terraform {
@@ -66,7 +65,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "eu-central-1"
+  region = var.region
 }
 
 module "vpc" {
