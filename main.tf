@@ -1,6 +1,5 @@
 variable "name" {
   description = "the name of your stack, e.g. \"fl-bcg\""
-  default     = "fl-bcg"
 }
 
 variable "environment" {
