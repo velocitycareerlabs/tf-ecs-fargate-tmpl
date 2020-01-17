@@ -137,4 +137,10 @@ resource "aws_ecs_service" "main" {
     container_name   = "${var.name}-container-${var.environment}"
     container_port   = var.container_port
   }
+
+  # we ignore task_definition changes as the revision changes on deploy
+  # of a new version of the application
+  lifecycle {
+    ignore_changes = [task_definition]
+  }
 }
