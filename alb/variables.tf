@@ -15,7 +15,7 @@ variable "vpc_id" {
 }
 
 variable "alb_security_groups" {
-  description = "Environment tag, e.g prod"
+  description = "Comma separated list of security groups"
 }
 
 variable "alb_tls_cert_arn" {
@@ -23,5 +23,5 @@ variable "alb_tls_cert_arn" {
 }
 
 variable "health_check_path" {
-  description = "Path to check if the service is healthy, e.g. /status"
+  description = "Path to check if the service is healthy, e.g. \"/status\""
 }
