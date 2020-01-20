@@ -35,7 +35,7 @@ module "alb" {
   environment         = var.environment
   alb_security_groups = [module.security_groups.alb]
   alb_tls_cert_arn    = var.tsl_certificate_arn
-  health_check_path   = "/health"
+  health_check_path   = var.health_check_path
 }
 
 module "ecr" {
