@@ -1,11 +1,3 @@
-variable "name" {
-  description = "the name of your stack, e.g. \"fl-bcg\""
-}
-
-variable "environment" {
-  description = "the name of your environment, e.g. \"prod\""
-}
-
 resource "aws_ecr_repository" "main" {
   name                 = "${var.name}-${var.environment}"
   image_tag_mutability = "MUTABLE"
