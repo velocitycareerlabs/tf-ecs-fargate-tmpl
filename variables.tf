@@ -12,6 +12,26 @@ variable "region" {
   default     = "eu-central-1"
 }
 
+variable "aws-region" {
+  type        = string
+  description = "AWS region to launch servers."
+  default     = "eu-central-1"
+}
+
+variable "aws-access-key" {
+  type = string
+}
+
+variable "aws-secret-key" {
+  type = string
+}
+
+variable "application-secrets" {
+  description = "A map of secrets that is passed into the application. Formatted like ENV_VAR = VALUE"
+  type        = map
+}
+
+
 variable "availability_zones" {
   description = "a comma-separated list of availability zones, defaults to all AZ of the region, if set to something other than the defaults, both private_subnets and public_subnets have to be defined as well"
   default     = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
@@ -53,8 +73,8 @@ variable "container_memory" {
 }
 
 variable "health_check_path" {
-    description = "Http path for task health check"
-    default     = "/health"
+  description = "Http path for task health check"
+  default     = "/health"
 }
 
 variable "tsl_certificate_arn" {
