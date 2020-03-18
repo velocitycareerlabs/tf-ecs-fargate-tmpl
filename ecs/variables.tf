@@ -52,6 +52,6 @@ variable "container_secrets" {
   type        = list
 }
 
-variable "secret_arn" {
-  description = "ARN for secret"
+variable "container_secrets_arns" {
+  description = "ARN for secrets"
 }

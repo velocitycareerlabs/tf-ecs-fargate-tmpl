@@ -64,18 +64,25 @@ module "ecr" {
   environment = var.environment
 }
 
+
+module "secrets" {
+  source              = "./modules/secrets"
+  name                = var.name
+  environment         = var.environment
+  application-secrets = var.application-secrets
+}
+
 module "ecs" {
-  source                      = "./ecs"
+  source                      = "./modules/ecs"
   name                        = var.name
   environment                 = var.environment
-  region                      = var.region
+  region                      = var.aws-region
   subnets                     = module.vpc.private_subnets
   aws_alb_target_group_arn    = module.alb.aws_alb_target_group_arn
   ecs_service_security_groups = [module.security_groups.ecs_tasks]
   container_port              = var.container_port
   container_cpu               = var.container_cpu
   container_memory            = var.container_memory
-  container_image             = module.ecr.aws_ecr_repository_url
   service_desired_count       = var.service_desired_count
   container_environment = [
     { name = "LOG_LEVEL",
@@ -83,9 +90,8 @@ module "ecs" {
     { name = "PORT",
     value = var.container_port }
   ]
-  container_secrets = [
-    { name = "API_KEYS",
-    valueFrom = aws_secretsmanager_secret_version.api_keys_value.arn }
-  ]
-  secret_arn = aws_secretsmanager_secret_version.api_keys_value.arn
+  container_secrets      = module.secrets.secrets_map
+  aws_ecr_repository_url = module.ecr.aws_ecr_repository_url
+  container_secrets_arns = module.secrets.application_secrets_arn
 }
+
