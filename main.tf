@@ -1,4 +1,6 @@
 provider "aws" {
+  access_key = var.aws-access-key
+  secret_key = var.aws-secret-key
   region     = var.aws-region
 }
 
@@ -83,7 +85,7 @@ module "ecs" {
   service_desired_count       = var.service_desired_count
   container_environment  = var.application-vars
   container_secrets      = module.secrets.secrets_map
-  aws_ecr_repository_url = module.ecr.aws_ecr_repository_url
+  container_image = module.ecr.aws_ecr_repository_url
   container_secrets_arns = module.secrets.application_secrets_arn
 }
 
