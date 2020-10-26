@@ -31,6 +31,11 @@ variable "application-secrets" {
   type        = map
 }
 
+variable "application-vars" {
+  description = "A array of variables that is passed into the application. Formatted like { name = "ENV_VAR", value = "ENV_VALUE" }"
+  type        = list(object({name = string, value=string}))
+  default     = [{ name = "LOG_LEVEL", value = "DEBUG" }, { name = "PORT", value = var.container_port }]
+}
 
 variable "availability_zones" {
   description = "a comma-separated list of availability zones, defaults to all AZ of the region, if set to something other than the defaults, both private_subnets and public_subnets have to be defined as well"
