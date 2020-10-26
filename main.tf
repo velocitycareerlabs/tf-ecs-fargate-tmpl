@@ -84,12 +84,7 @@ module "ecs" {
   container_cpu               = var.container_cpu
   container_memory            = var.container_memory
   service_desired_count       = var.service_desired_count
-  container_environment = [
-    { name = "LOG_LEVEL",
-    value = "DEBUG" },
-    { name = "PORT",
-    value = var.container_port }
-  ]
+  container_environment  = var.application_vars
   container_secrets      = module.secrets.secrets_map
   aws_ecr_repository_url = module.ecr.aws_ecr_repository_url
   container_secrets_arns = module.secrets.application_secrets_arn
