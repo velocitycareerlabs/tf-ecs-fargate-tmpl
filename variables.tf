@@ -4,26 +4,13 @@ variable "name" {
 
 variable "environment" {
   description = "the name of your environment, e.g. \"prod\""
-  default     = "prod"
-}
-
-variable "region" {
-  description = "the AWS region in which resources are created, you must set the availability_zones variable as well if you define this value to something other than the default"
-  default     = "eu-central-1"
+  default     = "dev"
 }
 
 variable "aws-region" {
   type        = string
   description = "AWS region to launch servers."
-  default     = "eu-central-1"
-}
-
-variable "aws-access-key" {
-  type = string
-}
-
-variable "aws-secret-key" {
-  type = string
+  default     = "us-east-1"
 }
 
 variable "application-secrets" {
@@ -32,14 +19,14 @@ variable "application-secrets" {
 }
 
 variable "application-vars" {
-  description = "A array of variables that is passed into the application. Formatted like { name = "ENV_VAR", value = "ENV_VALUE" }"
+  description = "A array of variables that is passed into the application."
   type        = list(object({name = string, value=string}))
-  default     = [{ name = "LOG_LEVEL", value = "DEBUG" }, { name = "PORT", value = var.container_port }]
+  default     = [{ name = "LOG_LEVEL", value = "DEBUG" }, { name = "PORT", value = "8000" }]
 }
 
 variable "availability_zones" {
   description = "a comma-separated list of availability zones, defaults to all AZ of the region, if set to something other than the defaults, both private_subnets and public_subnets have to be defined as well"
-  default     = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
+  default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
 }
 
 variable "cidr" {
@@ -82,6 +69,6 @@ variable "health_check_path" {
   default     = "/health"
 }
 
-variable "tsl_certificate_arn" {
+variable "tls_certificate_arn" {
   description = "The ARN of the certificate that the ALB uses for https"
 }

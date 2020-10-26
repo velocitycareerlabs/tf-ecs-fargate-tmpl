@@ -1,16 +1,13 @@
 provider "aws" {
-  access_key = var.aws-access-key
-  secret_key = var.aws-secret-key
   region     = var.aws-region
-  version    = "~> 2.0"
 }
 
 terraform {
   backend "s3" {
-    bucket  = "terraform-backend-store"
+    bucket  = "vcl-terraform-backend-store"
     encrypt = true
     key     = "terraform.tfstate"
-    region  = "eu-central-1"
+    region  = "us-east-1"
     # dynamodb_table = "terraform-state-lock-dynamo" - uncomment this line once the terraform-state-lock-dynamo has been terraformed
   }
 }
@@ -54,7 +51,7 @@ module "alb" {
   subnets             = module.vpc.public_subnets
   environment         = var.environment
   alb_security_groups = [module.security_groups.alb]
-  alb_tls_cert_arn    = var.tsl_certificate_arn
+  alb_tls_cert_arn    = var.tls_certificate_arn
   health_check_path   = var.health_check_path
 }
 
@@ -66,14 +63,14 @@ module "ecr" {
 
 
 module "secrets" {
-  source              = "./modules/secrets"
+  source              = "./secrets"
   name                = var.name
   environment         = var.environment
   application-secrets = var.application-secrets
 }
 
 module "ecs" {
-  source                      = "./modules/ecs"
+  source                      = "./ecs"
   name                        = var.name
   environment                 = var.environment
   region                      = var.aws-region
@@ -84,7 +81,7 @@ module "ecs" {
   container_cpu               = var.container_cpu
   container_memory            = var.container_memory
   service_desired_count       = var.service_desired_count
-  container_environment  = var.application_vars
+  container_environment  = var.application-vars
   container_secrets      = module.secrets.secrets_map
   aws_ecr_repository_url = module.ecr.aws_ecr_repository_url
   container_secrets_arns = module.secrets.application_secrets_arn
