@@ -149,17 +149,9 @@ resource "aws_ecs_task_definition" "main" {
   }
 }
 
-resource "aws_ecs_cluster" "main" {
-  name = "${var.name}-cluster-${var.environment}"
-  tags = {
-    Name        = "${var.name}-cluster-${var.environment}"
-    Environment = var.environment
-  }
-}
-
 resource "aws_ecs_service" "main" {
   name                               = "${var.name}-service-${var.environment}"
-  cluster                            = aws_ecs_cluster.main.id
+  cluster                            = var.ecs_cluster.id
   task_definition                    = aws_ecs_task_definition.main.arn
   desired_count                      = var.service_desired_count
   deployment_minimum_healthy_percent = 50
@@ -191,7 +183,7 @@ resource "aws_ecs_service" "main" {
 resource "aws_appautoscaling_target" "ecs_target" {
   max_capacity       = 4
   min_capacity       = 1
-  resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.main.name}"
+  resource_id        = "service/${var.ecs_cluster.name}/${aws_ecs_service.main.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
 }

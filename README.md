@@ -4,6 +4,16 @@ This terraform setup can be used to setup the AWS infrastructure
 for a dockerized application running on ECS with Fargate launch
 configuration.
 
+## Todo
+- [ ] Add common vars section
+- [ ] Is it possible to refer to template vars in the service.vars section
+- [ ] permit override within each service of memory, cpu, replics configuration
+- [ ] Only load required secrets into each server
+- [ ] Test on multiple clusters in the same vpc (dev & staging for example, but in the same vpc)
+- [ ] enable reusing a the module
+- [ ] test to ensure it works for itay
+- [ ] add dashboards
+
 ## Resources
 
 This setup creates the following resources:

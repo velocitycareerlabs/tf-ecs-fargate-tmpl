@@ -80,3 +80,8 @@ variable "health_check_path" {
 variable "tls_certificate_arn" {
   description = "The ARN of the certificate that the ALB uses for https"
 }
+
+variable "services" {
+  description = "The map of services"
+  type        = map
+}

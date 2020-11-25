@@ -1,9 +1,13 @@
 variable "name" {
-  description = "the name of your stack, e.g. \"demo\""
+  description = "the name of your service, e.g. \"demo\""
 }
 
 variable "environment" {
   description = "the name of your environment, e.g. \"prod\""
+}
+
+variable "ecs_cluster" {
+  description = "the ecs cluster id to deploy the service into"
 }
 
 variable "region" {
