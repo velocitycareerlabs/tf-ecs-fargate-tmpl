@@ -5,10 +5,10 @@ for a dockerized application running on ECS with Fargate launch
 configuration.
 
 ## Todo
-- [ ] Add common vars section
+- [x] Add common vars section
+- [x] Only load required secrets into each server
+- [x] permit override within each service of memory, cpu, replics configuration
 - [ ] Is it possible to refer to template vars in the service.vars section
-- [ ] permit override within each service of memory, cpu, replics configuration
-- [ ] Only load required secrets into each server
 - [ ] Test on multiple clusters in the same vpc (dev & staging for example, but in the same vpc)
 - [ ] enable reusing a the module
 - [ ] test to ensure it works for itay

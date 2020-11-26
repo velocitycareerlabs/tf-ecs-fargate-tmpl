@@ -85,3 +85,8 @@ variable "services" {
   description = "The map of services"
   type        = map
 }
+
+variable "common_service_vars" {
+  description = "The array of common environment vars for each service"
+  default     = []
+}

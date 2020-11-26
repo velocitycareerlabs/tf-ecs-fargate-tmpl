@@ -3,7 +3,7 @@ aws s3api put-bucket-encryption --bucket vcl-terraform-backend-store --server-si
 aws iam create-user --user-name vcl-terraform-user
 aws iam attach-user-policy --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess --user-name vcl-terraform-user
 aws iam attach-user-policy --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess --user-name vcl-terraform-user
-# update s3 bucket policy with user ARN
+# update bucket-policy.json file with user ARN output from previous step
 aws s3api put-bucket-policy --bucket vcl-terraform-backend-store --policy file://bucket-policy.json
 aws s3api put-bucket-versioning --bucket vcl-terraform-backend-store --versioning-configuration Status=Enabled
 aws iam create-access-key --user-name vcl-terraform-user

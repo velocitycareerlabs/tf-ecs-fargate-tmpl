@@ -93,13 +93,13 @@ module "ecs" {
   subnets                     = module.vpc.private_subnets
   aws_alb_target_group_arn    = module.alb[each.key].aws_alb_target_group_arn
   ecs_service_security_groups = [module.security_groups[each.key].ecs_tasks]
-  container_port              = var.container_port
-  container_cpu               = var.container_cpu
-  container_memory            = var.container_memory
-  service_desired_count       = var.service_desired_count
-  container_environment  = each.value.vars
-  container_image        = module.ecr[each.key].aws_ecr_repository_url
-  container_secrets      = module.secrets.secrets_map
-  container_secrets_arns = module.secrets.application_secrets_arn
+  container_port              = lookup(each.value, "container_port", var.container_port)
+  container_cpu               = lookup(each.value, "container_cpu", var.container_cpu)
+  container_memory            = lookup(each.value, "container_memory", var.container_memory)
+  service_desired_count       = lookup(each.value, "service_desired_count", var.service_desired_count)
+  container_environment       = concat(var.common_service_vars, lookup(each.value, "vars", []))
+  container_image             = module.ecr[each.key].aws_ecr_repository_url
+  container_secrets           = [for secretKey in keys(each.value.secretMap): {name = secretKey, valueFrom = lookup(module.secrets.secrets, each.value.secretMap[secretKey])}]
+  container_secrets_arns      = module.secrets.application_secrets_arn
 }
 

@@ -24,7 +24,6 @@ locals {
     name      = secretKey
     valueFrom = lookup(local.secrets, secretKey)
     }
-
   ]
 }
 
@@ -34,5 +33,9 @@ output "application_secrets_arn" {
 
 output "secrets_map" {
   value = local.secretMap
+}
+
+output "secrets" {
+  value = local.secrets
 }
 
